@@ -541,6 +541,11 @@ class FakeTaskTest(absltest.TestCase):
       preprocessors.append_eos_after_trim
   )
 
+  DEFAULT_OUTPUT_FEATURES = {
+      "inputs": dataset_providers.Feature(sentencepiece_vocab()),
+      "targets": dataset_providers.Feature(sentencepiece_vocab())
+  }
+
   def add_task(
       self,
       name,
@@ -550,10 +555,7 @@ class FakeTaskTest(absltest.TestCase):
       **kwargs):
 
     if not output_features:
-      output_features = {
-          "inputs": dataset_providers.Feature(sentencepiece_vocab()),
-          "targets": dataset_providers.Feature(sentencepiece_vocab())
-      }
+      output_features = self.DEFAULT_OUTPUT_FEATURES
 
     return TaskRegistry.add(
         name,
